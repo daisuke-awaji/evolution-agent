@@ -1,0 +1,36 @@
+{
+  "name": "evolution-agent",
+  "version": "0.1.0",
+  "description": "Autonomous Evolution Agent for cloud applications",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "lint:fix": "npm run lint:fix --workspaces --if-present",
+    "dev:agent": "npm run dev --workspace=@evolution-agent/agent",
+    "dev:api": "npm run dev --workspace=@evolution-agent/api",
+    "cdk": "npm run cdk --workspace=@evolution-agent/cdk",
+    "deploy": "npm run build && npm run deploy --workspace=@evolution-agent/cdk",
+    "deploy:dev": "npm run build && npm run deploy:dev --workspace=@evolution-agent/cdk",
+    "destroy": "npm run destroy --workspace=@evolution-agent/cdk",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.46.4"
+  }
+}
