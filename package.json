@@ -14,6 +14,8 @@
     "test": "npm run test --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "lint:fix": "npm run lint:fix --workspaces --if-present",
+    "format": "prettier --write \"packages/*/src/**/*.ts\"",
+    "format:check": "prettier --check \"packages/*/src/**/*.ts\"",
     "dev:agent": "npm run dev --workspace=@evolution-agent/agent",
     "dev:api": "npm run dev --workspace=@evolution-agent/api",
     "cdk": "npm run cdk --workspace=@evolution-agent/cdk",
