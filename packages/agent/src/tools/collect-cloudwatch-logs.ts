@@ -57,13 +57,16 @@ export const collectCloudWatchLogs = tool({
       }
     }
 
-    if (!results) return JSON.parse(JSON.stringify({ queryId, message: 'Query timed out', results: [] }));
+    if (!results)
+      return JSON.parse(JSON.stringify({ queryId, message: 'Query timed out', results: [] }));
 
-    return JSON.parse(JSON.stringify({
-      queryId,
-      results: results.map((row) =>
-        Object.fromEntries((row ?? []).map((f) => [f.field ?? '', f.value ?? '']))
-      ),
-    }));
+    return JSON.parse(
+      JSON.stringify({
+        queryId,
+        results: results.map((row) =>
+          Object.fromEntries((row ?? []).map((f) => [f.field ?? '', f.value ?? '']))
+        ),
+      })
+    );
   },
 });

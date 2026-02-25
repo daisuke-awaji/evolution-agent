@@ -170,11 +170,7 @@ export class FeedbackDynamoDBService {
     return items;
   }
 
-  async markAsProcessed(
-    targetId: string,
-    feedbackId: string,
-    reportId: string
-  ): Promise<void> {
+  async markAsProcessed(targetId: string, feedbackId: string, reportId: string): Promise<void> {
     const now = new Date().toISOString();
 
     await this.client.send(

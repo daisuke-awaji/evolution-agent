@@ -7,7 +7,8 @@ const execAsync = promisify(exec);
 
 export const createGithubIssue = tool({
   name: 'create_github_issue',
-  description: 'Create a new GitHub Issue in a repository for analysis findings or improvement proposals.',
+  description:
+    'Create a new GitHub Issue in a repository for analysis findings or improvement proposals.',
   inputSchema: z.object({
     owner: z.string().describe('GitHub repository owner'),
     repo: z.string().describe('GitHub repository name'),
@@ -17,9 +18,7 @@ export const createGithubIssue = tool({
   }),
   callback: async ({ owner, repo, title, body, labels }) => {
     const labelFlag =
-      labels && labels.length > 0
-        ? labels.map((l) => `--label "${l}"`).join(' ')
-        : '';
+      labels && labels.length > 0 ? labels.map((l) => `--label "${l}"`).join(' ') : '';
 
     const escapedTitle = title.replace(/"/g, '\\"');
     const escapedBody = body.replace(/"/g, '\\"');

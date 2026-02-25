@@ -115,18 +115,14 @@ export class ReportsDynamoDBService {
       })
     );
 
-    const items: ReportItem[] = (result.Items || []).map(
-      (item) => unmarshall(item) as ReportItem
-    );
+    const items: ReportItem[] = (result.Items || []).map((item) => unmarshall(item) as ReportItem);
 
     const hasMore = !!result.LastEvaluatedKey;
     const newNextToken = result.LastEvaluatedKey
       ? Buffer.from(JSON.stringify(result.LastEvaluatedKey)).toString('base64')
       : undefined;
 
-    console.log(
-      `[ReportsDynamoDBService] Listed ${items.length} reports for target ${targetId}`
-    );
+    console.log(`[ReportsDynamoDBService] Listed ${items.length} reports for target ${targetId}`);
 
     return { items, nextToken: newNextToken, hasMore };
   }
@@ -171,8 +167,6 @@ export class ReportsDynamoDBService {
       })
     );
 
-    console.log(
-      `[ReportsDynamoDBService] Updated report ${reportId} status to ${status}`
-    );
+    console.log(`[ReportsDynamoDBService] Updated report ${reportId} status to ${status}`);
   }
 }

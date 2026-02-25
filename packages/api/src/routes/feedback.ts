@@ -5,7 +5,11 @@
  */
 
 import { Router, Response } from 'express';
-import { apiKeyAuthMiddleware, jwtAuthMiddleware, AuthenticatedRequest } from '../middleware/auth.js';
+import {
+  apiKeyAuthMiddleware,
+  jwtAuthMiddleware,
+  AuthenticatedRequest,
+} from '../middleware/auth.js';
 import { FeedbackDynamoDBService } from '../services/feedback-dynamodb.js';
 
 const router = Router();

@@ -29,7 +29,16 @@ export const collectCloudWatchMetrics = tool({
     stat: z.string().describe('Statistics to retrieve (e.g., Average, Sum)').default('Average'),
     region: z.string().optional().describe('AWS region'),
   }),
-  callback: async ({ namespace, metricNames, dimensions, startTime, endTime, period, stat, region }) => {
+  callback: async ({
+    namespace,
+    metricNames,
+    dimensions,
+    startTime,
+    endTime,
+    period,
+    stat,
+    region,
+  }) => {
     const client = new CloudWatchClient({ region: region ?? config.AWS_REGION });
 
     const queries: MetricDataQuery[] = metricNames.map((metricName, i) => ({
@@ -53,15 +62,17 @@ export const collectCloudWatchMetrics = tool({
       })
     );
 
-    return JSON.parse(JSON.stringify({
-      results: (response.MetricDataResults ?? []).map((r, i) => ({
-        metricName: metricNames[i],
-        id: r.Id ?? null,
-        label: r.Label ?? null,
-        timestamps: r.Timestamps?.map((t) => t.toISOString()) ?? [],
-        values: r.Values ?? [],
-        statusCode: r.StatusCode ?? null,
-      })),
-    }));
+    return JSON.parse(
+      JSON.stringify({
+        results: (response.MetricDataResults ?? []).map((r, i) => ({
+          metricName: metricNames[i],
+          id: r.Id ?? null,
+          label: r.Label ?? null,
+          timestamps: r.Timestamps?.map((t) => t.toISOString()) ?? [],
+          values: r.Values ?? [],
+          statusCode: r.StatusCode ?? null,
+        })),
+      })
+    );
   },
 });

@@ -16,8 +16,7 @@ export function createAgent(options: CreateAgentOptions = {}): Agent {
   const model = createBedrockModel(modelId, region);
 
   const systemPrompt =
-    options.systemPrompt ??
-    buildSystemPrompt({ targets: config.EVOLUTION_TARGETS });
+    options.systemPrompt ?? buildSystemPrompt({ targets: config.EVOLUTION_TARGETS });
 
   logger.info('Creating Evolution Agent:', {
     modelId,

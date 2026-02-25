@@ -30,7 +30,17 @@ export const createGithubPr = tool({
     commitMessage: z.string().describe('Commit message'),
     labels: z.array(z.string()).optional().describe('Labels to apply to the PR'),
   }),
-  callback: async ({ owner, repo, baseBranch, branchName, title, body, files, commitMessage, labels }) => {
+  callback: async ({
+    owner,
+    repo,
+    baseBranch,
+    branchName,
+    title,
+    body,
+    files,
+    commitMessage,
+    labels,
+  }) => {
     const tmpDir = path.join(os.tmpdir(), `evolution-pr-${Date.now()}`);
     await mkdir(tmpDir, { recursive: true });
 

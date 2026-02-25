@@ -56,31 +56,35 @@ router.get('/', jwtAuthMiddleware, async (req: AuthenticatedRequest, res: Respon
  * GET /reports/:targetId/:reportId
  * Get a single report. Authenticated by JWT.
  */
-router.get('/:targetId/:reportId', jwtAuthMiddleware, async (req: AuthenticatedRequest, res: Response) => {
-  try {
-    const { targetId, reportId } = req.params;
+router.get(
+  '/:targetId/:reportId',
+  jwtAuthMiddleware,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const { targetId, reportId } = req.params;
 
-    const report = await reportsService.getReport(targetId, reportId);
+      const report = await reportsService.getReport(targetId, reportId);
 
-    if (!report) {
-      res.status(404).json({
-        error: 'Not Found',
-        message: `Report ${reportId} not found for target ${targetId}`,
+      if (!report) {
+        res.status(404).json({
+          error: 'Not Found',
+          message: `Report ${reportId} not found for target ${targetId}`,
+          timestamp: new Date().toISOString(),
+        });
+        return;
+      }
+
+      console.log(`✅ Retrieved report ${reportId} for target ${targetId}`);
+      res.status(200).json(report);
+    } catch (error) {
+      console.error('💥 GET /reports/:targetId/:reportId error:', error);
+      res.status(500).json({
+        error: 'Internal Server Error',
+        message: 'Failed to get report',
         timestamp: new Date().toISOString(),
       });
-      return;
     }
-
-    console.log(`✅ Retrieved report ${reportId} for target ${targetId}`);
-    res.status(200).json(report);
-  } catch (error) {
-    console.error('💥 GET /reports/:targetId/:reportId error:', error);
-    res.status(500).json({
-      error: 'Internal Server Error',
-      message: 'Failed to get report',
-      timestamp: new Date().toISOString(),
-    });
   }
-});
+);
 
 export default router;
