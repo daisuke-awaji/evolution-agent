@@ -12,7 +12,7 @@ export const collectCloudWatchLogs = tool({
   name: 'collect_cloudwatch_logs',
   description:
     'Query CloudWatch Logs Insights to collect log data from specified log groups within a time range.',
-  schema: z.object({
+  inputSchema: z.object({
     logGroupNames: z.array(z.string()).describe('List of CloudWatch log group names to query'),
     queryString: z
       .string()
@@ -28,7 +28,7 @@ export const collectCloudWatchLogs = tool({
       .default(() => Math.floor(Date.now() / 1000)),
     region: z.string().optional().describe('AWS region (defaults to config region)'),
   }),
-  handler: async ({ logGroupNames, queryString, startTime, endTime, region }) => {
+  callback: async ({ logGroupNames, queryString, startTime, endTime, region }) => {
     const client = new CloudWatchLogsClient({ region: region ?? config.AWS_REGION });
 
     const startQuery = await client.send(
@@ -57,13 +57,16 @@ export const collectCloudWatchLogs = tool({
       }
     }
 
-    if (!results) return { queryId, message: 'Query timed out', results: [] };
+    if (!results)
+      return JSON.parse(JSON.stringify({ queryId, message: 'Query timed out', results: [] }));
 
-    return {
-      queryId,
-      results: results.map((row) =>
-        Object.fromEntries((row ?? []).map((f) => [f.field ?? '', f.value ?? '']))
-      ),
-    };
+    return JSON.parse(
+      JSON.stringify({
+        queryId,
+        results: results.map((row) =>
+          Object.fromEntries((row ?? []).map((f) => [f.field ?? '', f.value ?? '']))
+        ),
+      })
+    );
   },
 });

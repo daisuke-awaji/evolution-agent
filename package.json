@@ -14,6 +14,8 @@
     "test": "npm run test --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "lint:fix": "npm run lint:fix --workspaces --if-present",
+    "format": "prettier --write \"packages/*/src/**/*.ts\"",
+    "format:check": "prettier --check \"packages/*/src/**/*.ts\"",
     "dev:agent": "npm run dev --workspace=@evolution-agent/agent",
     "dev:api": "npm run dev --workspace=@evolution-agent/api",
     "cdk": "npm run cdk --workspace=@evolution-agent/cdk",
@@ -24,12 +26,15 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@types/jest": "^30.0.0",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "globals": "^16.5.0",
     "husky": "^9.1.7",
+    "jest": "^30.2.0",
     "prettier": "^3.4.2",
+    "ts-jest": "^29.4.6",
     "typescript": "^5.7.0",
     "typescript-eslint": "^8.46.4"
   }
